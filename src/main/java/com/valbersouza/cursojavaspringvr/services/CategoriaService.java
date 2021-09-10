@@ -2,8 +2,10 @@ package com.valbersouza.cursojavaspringvr.services;
 
 import com.valbersouza.cursojavaspringvr.domain.Categoria;
 import com.valbersouza.cursojavaspringvr.repositories.CategoriaRepository;
+import com.valbersouza.cursojavaspringvr.services.exceptions.DataIntegrityException;
 import com.valbersouza.cursojavaspringvr.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,5 +30,14 @@ public class CategoriaService {
     public Categoria update(Categoria obj) {
         find(obj.getId());
         return repo.save(obj);
+    }
+
+    public void delete(Integer id) {
+        find(id);
+        try {
+            repo.deleteById(id);
+        }catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos!!");
+        }
     }
 }
