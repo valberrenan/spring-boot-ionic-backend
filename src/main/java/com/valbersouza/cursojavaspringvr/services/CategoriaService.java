@@ -1,6 +1,7 @@
 package com.valbersouza.cursojavaspringvr.services;
 
 import com.valbersouza.cursojavaspringvr.domain.Categoria;
+import com.valbersouza.cursojavaspringvr.dto.CategoriaDTO;
 import com.valbersouza.cursojavaspringvr.repositories.CategoriaRepository;
 import com.valbersouza.cursojavaspringvr.services.exceptions.DataIntegrityException;
 import com.valbersouza.cursojavaspringvr.services.exceptions.ObjectNotFoundException;
@@ -52,5 +53,9 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDTO) {
+        return new Categoria(objDTO.getId(), objDTO.getNome());
     }
 }
