@@ -1,6 +1,8 @@
 package com.valbersouza.cursojavaspringvr.config;
 
 import com.valbersouza.cursojavaspringvr.services.DBService;
+import com.valbersouza.cursojavaspringvr.services.EmailService;
+import com.valbersouza.cursojavaspringvr.services.MockEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +21,10 @@ public class TestConfig {
     public boolean instanciateDataBase() throws ParseException {
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService() {
+        return new MockEmailService();
     }
 }
